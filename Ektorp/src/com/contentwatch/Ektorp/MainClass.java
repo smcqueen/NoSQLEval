@@ -2,12 +2,17 @@ package com.contentwatch.Ektorp;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.TreeSet;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
 import org.ektorp.http.HttpClient;
+import org.ektorp.http.HttpResponse;
+import org.ektorp.http.RestTemplate;
 import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbConnector;
 import org.ektorp.impl.StdCouchDbInstance;
@@ -23,9 +28,22 @@ public class MainClass {
 			.host("localhost")
 			.port(5984)
 			.build();
-		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
-        CouchDbConnector db = new StdCouchDbConnector("policies", dbInstance);
-        db.createDatabaseIfNotExists();
+		HttpResponse rsp;
+		RestTemplate template = new RestTemplate(httpClient);
+		rsp = template.get("/_uuids?count=20");
+    	ObjectMapper objectMapper = new ObjectMapper();
+    	Set<String> uuidSet1 = UUIDImpl.getUuids(httpClient, 1);
+    	for (String uuid : uuidSet1) {
+    		System.out.println(uuid);
+    	}
+    	System.out.println();
+    	Set<String> uuidSet20 = UUIDImpl.getUuids(httpClient, 20);
+    	for (String uuid : uuidSet20) {
+    		System.out.println(uuid);
+    	}
+//		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
+//        CouchDbConnector db = new StdCouchDbConnector("policies", dbInstance);
+//        db.createDatabaseIfNotExists();
 /*        
         Policy policy = new Policy();
         policy.setId("3");
@@ -48,6 +66,7 @@ public class MainClass {
         policy.setChildren(children);
         db.create(policy);
 */
+/*        
         if (db.contains("1")) {
         	Policy policy = db.get(Policy.class, "1");
         	InputStream policyStream = db.getAsStream("1");
@@ -87,6 +106,7 @@ public class MainClass {
         	policyStream.close();
         	System.out.println();
         }
+*/
 /*        
         Sofa sofa = null;
         if (db.contains("ektorp")) {
