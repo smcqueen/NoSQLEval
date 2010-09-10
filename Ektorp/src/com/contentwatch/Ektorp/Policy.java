@@ -13,6 +13,7 @@ public class Policy extends CouchDbDocument {
 	private String name;
 	private String parentId;
 	private TreeSet<String> children;
+
 	
 	public EPolicyType getType() {
 		return type;
@@ -55,6 +56,9 @@ public class Policy extends CouchDbDocument {
 	}
 	public void setChildren(TreeSet<String> children) {
 		this.children = children;
+	}
+	public void setId(Integer n) {
+		super.setId(n.toString());
 	}
 }
 

@@ -32,18 +32,24 @@ public class MainClass {
 		RestTemplate template = new RestTemplate(httpClient);
 		rsp = template.get("/_uuids?count=20");
     	ObjectMapper objectMapper = new ObjectMapper();
-    	Set<String> uuidSet1 = UUIDImpl.getUuids(httpClient, 1);
-    	for (String uuid : uuidSet1) {
-    		System.out.println(uuid);
-    	}
-    	System.out.println();
-    	Set<String> uuidSet20 = UUIDImpl.getUuids(httpClient, 20);
-    	for (String uuid : uuidSet20) {
-    		System.out.println(uuid);
-    	}
-//		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
-//        CouchDbConnector db = new StdCouchDbConnector("policies", dbInstance);
-//        db.createDatabaseIfNotExists();
+//    	Set<String> uuidSet1 = UUIDImpl.getUuids(httpClient, 1);
+//    	for (String uuid : uuidSet1) {
+//    		System.out.println(uuid);
+//    	}
+//    	System.out.println();
+//    	Set<String> uuidSet20 = UUIDImpl.getUuids(httpClient, 20);
+//    	for (String uuid : uuidSet20) {
+//    		System.out.println(uuid);
+//    	}
+		CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
+        CouchDbConnector db = new StdCouchDbConnector("policies", dbInstance);
+        db.createDatabaseIfNotExists();
+//        Policy policy = new Policy();
+//        int id = 4;
+//        policy.setId(id);
+//        policy.setName("policyname" + id);
+//        policy.setParentId("0");
+        
 /*        
         Policy policy = new Policy();
         policy.setId("3");
@@ -66,7 +72,7 @@ public class MainClass {
         policy.setChildren(children);
         db.create(policy);
 */
-/*        
+///*        
         if (db.contains("1")) {
         	Policy policy = db.get(Policy.class, "1");
         	InputStream policyStream = db.getAsStream("1");
@@ -106,7 +112,7 @@ public class MainClass {
         	policyStream.close();
         	System.out.println();
         }
-*/
+//*/
 /*        
         Sofa sofa = null;
         if (db.contains("ektorp")) {
